@@ -1,13 +1,12 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
 #include <time.h>
 
-extern float dotProduct(float* A, float* B, int n);
+extern void dotProduct(float* A, float* B, int n, float* sdot);
 
 int main() {
-    int n;
+    int n = 0;
     printf("Enter the length of the vectors: ");
     scanf_s("%d", &n);
 
@@ -24,11 +23,15 @@ int main() {
         scanf_s("%f", &B[i]);
     }
 
-    // time
+    // Allocate memory to store the result
+    float sdot;
+
+    // Time measurement
     clock_t start, end;
     start = clock();
 
-    float sdot = dotProduct(A, B, n);
+    // Call the assembly function
+    dotProduct(A, B, n, &sdot);
 
     end = clock();
 
