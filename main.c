@@ -12,14 +12,14 @@
 #include <math.h>
 #include <time.h>
 // Pre-defined Constants 
-#define TRIAL_NO 30
-#define MAX_FLOAT 100.0f
+#define NUM 30
+#define MAX 100.0f
 
 // Dot Product Function 1 [x86_64 Assembly]
 extern float dotProduct(int n, float* A, float* B);
 
 
-// Dot Product Function [C lang]
+// Dot Product Function 2 [C lang]
 float cDotProduct(int n, float* A, float* B) {
     
     // initialize sdot to 0 float
@@ -33,54 +33,39 @@ float cDotProduct(int n, float* A, float* B) {
 }
 
 
-// Generate Random Values into Vector
+// Generate Random Values into Vectors A and B
 void generateRandomVector(int n, float* vector) {
 
-    int powCounter = 0;
-    int pow2 = 1;
+    int count = 0;
+    int pow = 1;
 
     for (int i = 0; i < n; i++) {
-        vector[i] = ((float)rand() / (float)(RAND_MAX)) * MAX_FLOAT;
-        vector[i] = (int)(vector[i] * MAX_FLOAT) / MAX_FLOAT;
+        vector[i] = ((float)rand() / (float)(RAND_MAX)) * MAX;
+        vector[i] = (int)(vector[i] * MAX) / MAX;
 
         if (rand() % 2 == 0)
             vector[i] /= -1;
 
-        if (i == pow2 - 1) {
-            printf("%i (%i), ", pow2, powCounter);
+        if (i == pow - 1) {
+            printf("%i\n", pow);
 
-            powCounter++;
-            pow2 *= 2;
+            count++;
+            pow *= 2;
         }
     }
 }
-
 
 double computeAverageTime(double* timesTaken) {
 
     double average = 0.0;
 
-    for (int i = 0; i < TRIAL_NO; i++)
+    for (int i = 0; i < NUM; i++)
         average += timesTaken[i];
 
-    return average / TRIAL_NO;
+    return average / NUM;
 }
 
-
-// Display Times Taken
-void printTimes(double* timesTaken) {
-    printf("[ ");
-
-    for (int i = 0; i < TRIAL_NO - 1; i++)
-        printf("%0.2f, ", timesTaken[i]);
-
-
-    printf("%0.2f ]\n", timesTaken[TRIAL_NO - 1]);
-}
-
-
-
-// Main
+// Main Function C
 int main()
 {
     // Initialize Variables
@@ -93,9 +78,9 @@ int main()
 
     // Time Variables
     clock_t startTime;
-    double cTimesTaken[TRIAL_NO];
+    double cTimesTaken[NUM];
     double cAvgTimeTaken;
-    double asmTimesTaken[TRIAL_NO];
+    double asmTimesTaken[NUM];
     double asmAvgTimeTaken;
 
     // Randomize Vectors
@@ -114,7 +99,7 @@ int main()
 
     // Time C Function Call
     printf("C Dot Product Function:\n");
-    for (int i = 0; i < TRIAL_NO; i++) {
+    for (int i = 0; i < NUM; i++) {
         startTime = clock();
         sdot = cDotProduct(n, A, B);
         startTime = clock() - startTime;
@@ -124,13 +109,11 @@ int main()
     cAvgTimeTaken = computeAverageTime(cTimesTaken);
     printf("\tsdot Float Result: %f\n", sdotC);
     printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotC);
-    printf("\tExecution Times: ");
-    printTimes(cTimesTaken);
-    printf("\tAverage Execution Time: %lf\n\n", cAvgTimeTaken);
+    printf("\tAverage Time: %lf\n\n", cAvgTimeTaken);
 
     // Time x86_64 Function Call
     printf("x86_64 Dot Product Function:\n");
-    for (int i = 0; i < TRIAL_NO; i++) {
+    for (int i = 0; i < NUM; i++) {
         startTime = clock();
         sdot = dotProduct(n, A, B);
         startTime = clock() - startTime;
@@ -140,9 +123,7 @@ int main()
     asmAvgTimeTaken = computeAverageTime(asmTimesTaken);
     printf("\tsdot Float Result: %f\n", sdotAsm);
     printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotAsm);
-    printf("\tExecution Times: ");
-    printTimes(asmTimesTaken);
-    printf("\tAverage Execution Time: %lf\n\n", asmAvgTimeTaken);
+    printf("\tAverage Time: %lf\n\n", asmAvgTimeTaken);
 
     // Results
     printf("Results:\n");
@@ -167,7 +148,7 @@ int main()
 
     // Time C Function Call
     printf("C Dot Product Function:\n");
-    for (int i = 0; i < TRIAL_NO; i++) {
+    for (int i = 0; i < NUM; i++) {
         startTime = clock();
         sdot = cDotProduct(n, A, B);
         startTime = clock() - startTime;
@@ -177,13 +158,11 @@ int main()
     cAvgTimeTaken = computeAverageTime(cTimesTaken);
     printf("\tsdot Float Result: %f\n", sdotC);
     printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotC);
-    printf("\tExecution Times: ");
-    printTimes(cTimesTaken);
-    printf("\tAverage Execution Time: %lf\n\n", cAvgTimeTaken);
+    printf("\tAverage Time: %lf\n\n", cAvgTimeTaken);
 
     // Time x86_64 Function Call
     printf("x86_64 Dot Product Function:\n");
-    for (int i = 0; i < TRIAL_NO; i++) {
+    for (int i = 0; i < NUM; i++) {
         startTime = clock();
         sdot = dotProduct(n, A, B);
         startTime = clock() - startTime;
@@ -193,9 +172,7 @@ int main()
     asmAvgTimeTaken = computeAverageTime(asmTimesTaken);
     printf("\tsdot Float Result: %f\n", sdotAsm);
     printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotAsm);
-    printf("\tExecution Times: ");
-    printTimes(asmTimesTaken);
-    printf("\tAverage Execution Time: %lf\n\n", asmAvgTimeTaken);
+    printf("\tAverage Time: %lf\n\n", asmAvgTimeTaken);
 
     // Results
     printf("Results:\n");
