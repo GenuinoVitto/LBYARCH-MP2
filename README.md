@@ -1,6 +1,5 @@
 # LBYARCH-MP2 - S12  
-Members: <br />Cruz, Mia Bernice, <br /> 
-         Genuino, Jose Mari Victorio
+Members: <br />- Cruz, Mia Bernice<br />- Genuino, Jose Mari Victorio
 
 This is a course requirement for Laboratory Computer Architecture
 
