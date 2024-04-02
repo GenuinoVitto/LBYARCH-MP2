@@ -18,3 +18,5 @@ Scalar variable n (integer) contains the length of the vector;  Vectors A and B 
 
 ## Output: 
 Store the result in memory location sdot.  Display the result for all versions of the kernel (i.e., C and  x86-64).
+
+## Program was run on Visual Studio 2022
