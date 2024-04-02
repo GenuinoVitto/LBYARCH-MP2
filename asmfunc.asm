@@ -1,31 +1,29 @@
+; Initialization
+section .data
 section .text
-    global dotProduct
+	bits 64
+	default rel		
+	global dotProduct
 
+; Dot Product Function 
 dotProduct:
-    ; rdi - pointer to A
-    ; rsi - pointer to B
-    ; rdx - n
-    ; rcx - pointer to sdot
+	; Reset Values to 0
+	pxor XMM0, XMM0
+	pxor XMM1, XMM1
+	pxor XMM2, XMM2
+	pxor XMM3, XMM3
+	pxor XMM4, XMM4
 
-    push rbp                        ; Preserve the base pointer
-    mov rbp, rsp                    ; Set up a new base pointer
+	; Loop 
+	L1:
+		MOVSS XMM1, [RDX]
+		MOVSS XMM2, [R8]
+		VMULSS XMM3, XMM1, XMM2
+		ADDSS XMM4, XMM3
+		ADD RDX, 4
+		ADD R8, 4
+		LOOP L1
 
-    xor rax, rax                    ; Clear rax for loop counter
-    xorps xmm0, xmm0                ; Clear xmm0 for accumulating the sum
-
-dotProduct_loop:
-    cmp rax, rdx                    ; Compare loop counter with n
-    je dotProduct_done             ; If loop counter equals n, jump to done
-
-    movss xmm1, dword [rdi + 4 * rax]  ; Load A[i] into xmm1
-    mulss xmm1, dword [rsi + 4 * rax]  ; Multiply A[i] with B[i]
-    addss xmm0, xmm1                ; Add the result to the sum in xmm0
-
-    inc rax                         ; Increment loop counter
-    jmp dotProduct_loop            ; Jump back to loop
-
-dotProduct_done:
-    movss [rcx], xmm0               ; Store the final result in sdot
-
-    pop rbp                         ; Restore the base pointer
-    ret
+	; Result is placed inside XMM0
+	MOVSS XMM0, XMM4
+	ret
