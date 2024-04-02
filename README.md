@@ -17,6 +17,7 @@ Scalar variable n (integer) contains the length of the vector;  Vectors A and B 
 ![image](https://github.com/GenuinoVitto/LBYARCH-MP2/assets/118496929/3b5794c0-0099-4b71-aa46-b635ed808947)
 
 ## Output: 
-Store the result in memory location sdot.  Display the result for all versions of the kernel (i.e., C and  x86-64).
+![image](https://github.com/GenuinoVitto/LBYARCH-MP2/assets/118496929/1eb76e3e-3bc6-406e-bcd2-ccf4b2169359)
+
 
 ## Program was run on Visual Studio 2022
