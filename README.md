@@ -7,9 +7,9 @@ This is a course requirement for Laboratory Computer Architecture
 
 Write the kernel in (1) C program and (2) an x86-64 assembly language.  The kernel is to perform a dot product between vector A and vector B and place the result in sdot.
 
-### Required to use functional scalar SIMD registers
+* Required to use functional scalar SIMD registers
 
-### Required to use functional scalar SIMD floating-point instructions
+* Required to use functional scalar SIMD floating-point instructions
 
 ### Input: Scalar variable n (integer) contains the length of the vector;  Vectors A and B are both single-precision float. Scalar sdot is a single-precision float.
 
