@@ -15,7 +15,7 @@
 #define TRIAL_NO 30
 #define Debugger 0
 #define MAX_FLOAT 100.0f
-#define TWO_DEBUG 16
+#define DebuggerTwo 16
 
 // Dot Product Function 1 [x86_64 Assembly]
 extern float dotProduct(int n, float* A, float* B);
@@ -50,7 +50,7 @@ void generateRandomVector(int n, float* vector) {
 
     // Debug
     if (Debugger == 1) {
-        for (int i = 0; i < TWO_DEBUG; i++)
+        for (int i = 0; i < DebuggerTwo; i++)
             vector[i] = i * 10.0f + i + i * 0.1f + i * 0.01f;
         return;
     }
@@ -75,19 +75,6 @@ void generateRandomVector(int n, float* vector) {
     }
 }
 
-
-// Display Vector for Debugging
-void printVector(int n, float* vector) {
-
-    printf("{ ");
-
-    for (int i = 0; i < n - 1; i++) {
-
-        printf("%0.2f, ", vector[i]);
-    }
-
-    printf("%0.2f }\n", vector[n - 1]);
-}
 
 
 
@@ -137,18 +124,12 @@ int main()
 
     // Randomize Vectors
     srand((unsigned int)time(NULL));
-    printf("Generating Vector A...\n");
+    printf("A =\n");
     generateRandomVector((int)pow(2, 28), A);
-    printf("Vector A Generated\n\n");
-    printf("Generating Vector B...\n");
+    printf("nDone\n\n");
+    printf("B =\n");
     generateRandomVector((int)pow(2, 28), B);
-    printf("Vector B Generated\n\n");
-
-    printf("Vector A first %i Values: ", TWO_DEBUG);
-    printVector(TWO_DEBUG, A);
-    printf("\n");
-    printf("Vector B first %i Values: ", TWO_DEBUG);
-    printVector(TWO_DEBUG, B);
+    printf("\nDone\n\n");
 
 
 
@@ -156,11 +137,11 @@ int main()
 
         printf("\n======================================================\n");
 
-        printf("\nCase 0 (Debug) : Vector Size n = %i\n\n", TWO_DEBUG);
-        n = TWO_DEBUG;
+        printf("\nCase 0 (Debug) : Vector Size n = %i\n\n", DebuggerTwo);
+        n = DebuggerTwo;
 
         // Time C Function Call
-        printf("C Dot Product Function Call Trials:\n");
+        printf("C Dot Product Function:\n");
         for (int i = 0; i < TRIAL_NO; i++) {
             startTime = clock();
             sdot = cDotProduct(n, A, B);
@@ -176,7 +157,7 @@ int main()
         printf("\tAverage Execution Time: %lf\n\n", cAvgTimeTaken);
 
         // Time x86_64 Function Call
-        printf("x86_64 Dot Product Function Call Trials:\n");
+        printf("x86_64 Dot Product Function:\n");
         for (int i = 0; i < TRIAL_NO; i++) {
             startTime = clock();
             sdot = dotProduct(n, A, B);
@@ -190,7 +171,7 @@ int main()
         printf("\tExecution Times: ");
         printTimes(asmTimesTaken);
         printf("\tAverage Execution Time: %lf\n\n", asmAvgTimeTaken);
-
+            
         // Results
         printf("Results:\n");
         printf("\tSimilarity: %.2f %%\n", sdotC * 100 / sdotAsm);
@@ -218,7 +199,7 @@ int main()
     printf("\nN = 2^20 = %i\n\n", n);
 
     // Time C Function Call
-    printf("C Dot Product Function Call Trials:\n");
+    printf("C Dot Product Function:\n");
     for (int i = 0; i < TRIAL_NO; i++) {
         startTime = clock();
         sdot = cDotProduct(n, A, B);
@@ -234,7 +215,7 @@ int main()
     printf("\tAverage Execution Time: %lf\n\n", cAvgTimeTaken);
 
     // Time x86_64 Function Call
-    printf("x86_64 Dot Product Function Call Trials:\n");
+    printf("x86_64 Dot Product Function:\n");
     for (int i = 0; i < TRIAL_NO; i++) {
         startTime = clock();
         sdot = dotProduct(n, A, B);
@@ -271,7 +252,7 @@ int main()
     printf("\nN = 2^24 = %i\n\n", n);
 
     // Time C Function Call
-    printf("C Dot Product Function Call Trials:\n");
+    printf("C Dot Product Function:\n");
     for (int i = 0; i < TRIAL_NO; i++) {
         startTime = clock();
         sdot = cDotProduct(n, A, B);
@@ -287,7 +268,7 @@ int main()
     printf("\tAverage Execution Time: %lf\n\n", cAvgTimeTaken);
 
     // Time x86_64 Function Call
-    printf("x86_64 Dot Product Function Call Trials:\n");
+    printf("x86_64 Dot Product Function:\n");
     for (int i = 0; i < TRIAL_NO; i++) {
         startTime = clock();
         sdot = dotProduct(n, A, B);
