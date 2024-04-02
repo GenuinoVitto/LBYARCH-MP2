@@ -13,9 +13,7 @@
 #include <time.h>
 // Pre-defined Constants 
 #define TRIAL_NO 30
-#define Debugger 0
 #define MAX_FLOAT 100.0f
-#define DebuggerTwo 16
 
 // Dot Product Function 1 [x86_64 Assembly]
 extern float dotProduct(int n, float* A, float* B);
@@ -28,17 +26,7 @@ float cDotProduct(int n, float* A, float* B) {
     float sdot = 0.0f;
 
     for (int i = 0; i < n; i++) {
-
-        if (Debugger == 1) {
-            printf("(%lf * %lf) = ", A[i], B[i]);
-            printf("%lf + ", A[i] * B[i]);
-        }
-
         sdot += A[i] * B[i];
-    }
-
-    if (Debugger == 1) {
-        printf("\n");
     }
 
     return sdot;
@@ -47,14 +35,6 @@ float cDotProduct(int n, float* A, float* B) {
 
 // Generate Random Values into Vector
 void generateRandomVector(int n, float* vector) {
-
-    // Debug
-    if (Debugger == 1) {
-        for (int i = 0; i < DebuggerTwo; i++)
-            vector[i] = i * 10.0f + i + i * 0.1f + i * 0.01f;
-        return;
-    }
-
 
     int powCounter = 0;
     int pow2 = 1;
@@ -76,8 +56,6 @@ void generateRandomVector(int n, float* vector) {
 }
 
 
-
-
 double computeAverageTime(double* timesTaken) {
 
     double average = 0.0;
@@ -89,17 +67,15 @@ double computeAverageTime(double* timesTaken) {
 }
 
 
-
 // Display Times Taken
 void printTimes(double* timesTaken) {
-
-    printf("{ ");
+    printf("[ ");
 
     for (int i = 0; i < TRIAL_NO - 1; i++)
-        printf("%0.3f, ", timesTaken[i]);
+        printf("%0.2f, ", timesTaken[i]);
 
 
-    printf("%0.3f }\n", timesTaken[TRIAL_NO - 1]);
+    printf("%0.2f ]\n", timesTaken[TRIAL_NO - 1]);
 }
 
 
@@ -126,72 +102,10 @@ int main()
     srand((unsigned int)time(NULL));
     printf("A =\n");
     generateRandomVector((int)pow(2, 28), A);
-    printf("nDone\n\n");
+    printf("\nDone\n\n");
     printf("B =\n");
     generateRandomVector((int)pow(2, 28), B);
     printf("\nDone\n\n");
-
-
-
-    if (Debugger == 1) {
-
-        printf("\n======================================================\n");
-
-        printf("\nCase 0 (Debug) : Vector Size n = %i\n\n", DebuggerTwo);
-        n = DebuggerTwo;
-
-        // Time C Function Call
-        printf("C Dot Product Function:\n");
-        for (int i = 0; i < TRIAL_NO; i++) {
-            startTime = clock();
-            sdot = cDotProduct(n, A, B);
-            startTime = clock() - startTime;
-            cTimesTaken[i] = ((double)startTime) / CLOCKS_PER_SEC;
-        }
-        sdotC = sdot;
-        cAvgTimeTaken = computeAverageTime(cTimesTaken);
-        printf("\tsdot Float Result: %f\n", sdotC);
-        printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotC);
-        printf("\tExecution Times: ");
-        printTimes(cTimesTaken);
-        printf("\tAverage Execution Time: %lf\n\n", cAvgTimeTaken);
-
-        // Time x86_64 Function Call
-        printf("x86_64 Dot Product Function:\n");
-        for (int i = 0; i < TRIAL_NO; i++) {
-            startTime = clock();
-            sdot = dotProduct(n, A, B);
-            startTime = clock() - startTime;
-            asmTimesTaken[i] = ((double)startTime) / CLOCKS_PER_SEC;
-        }
-        sdotAsm = sdot;
-        asmAvgTimeTaken = computeAverageTime(asmTimesTaken);
-        printf("\tsdot Float Result: %f\n", sdotAsm);
-        printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotAsm);
-        printf("\tExecution Times: ");
-        printTimes(asmTimesTaken);
-        printf("\tAverage Execution Time: %lf\n\n", asmAvgTimeTaken);
-            
-        // Results
-        printf("Results:\n");
-        printf("\tSimilarity: %.2f %%\n", sdotC * 100 / sdotAsm);
-        if (asmAvgTimeTaken <= 0)
-            printf("\tTime Difference: 0 (0 %% faster)\n");
-        else {
-            printf("\tTime Difference: %lf ", cAvgTimeTaken - asmAvgTimeTaken);
-
-            if (cAvgTimeTaken > asmAvgTimeTaken)
-                printf("(x86_64 is %.2lf times faster)\n", cAvgTimeTaken / asmAvgTimeTaken);
-            else
-                printf("(C is %.2lf times faster)\n", asmAvgTimeTaken / cAvgTimeTaken);
-        }
-
-        free(A);
-        free(B);
-        return 0;
-    }
-
-
 
     printf("\n======================================================\n");
 
