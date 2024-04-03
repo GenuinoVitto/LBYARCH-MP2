@@ -76,14 +76,14 @@ int main()
     float sdotC = 0;
     float sdotAsm = 0;
 
-    // Time Variables
+    // Times
     clock_t startTime;
-    double cTimesTaken[NUM];
-    double cAvgTimeTaken;
-    double asmTimesTaken[NUM];
-    double asmAvgTimeTaken;
+    double cTimes[NUM];
+    double cAverage;
+    double asmTimes[NUM];
+    double asmAverage;
 
-    // Randomize Vectors
+    // Generate Vector Values
     srand((unsigned int)time(NULL));
     printf("A =\n");
     generateRandomVector((int)pow(2, 28), A);
@@ -93,7 +93,8 @@ int main()
     printf("\nDone\n\n");
 
     printf("\n======================================================\n");
-
+    printf("\n==========Start of Program ...========================\n");
+    printf("\n======================================================\n");
     n = (int)pow(2, 20);
     printf("\nN = 2^20 = %i\n\n", n);
 
@@ -103,13 +104,13 @@ int main()
         startTime = clock();
         sdot = cDotProduct(n, A, B);
         startTime = clock() - startTime;
-        cTimesTaken[i] = ((double)startTime) / CLOCKS_PER_SEC;
+        cTimes[i] = ((double)startTime) / CLOCKS_PER_SEC;
     }
     sdotC = sdot;
-    cAvgTimeTaken = computeAverageTime(cTimesTaken);
-    printf("\tsdot Float Result: %f\n", sdotC);
-    printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotC);
-    printf("\tAverage Time: %lf\n\n", cAvgTimeTaken);
+    cAverage = computeAverageTime(cTimes);
+    printf("\tsdot Base10: %f\n", sdotC);
+    printf("\tsdot Base16: %x\n", *(unsigned int*)&sdotC);
+    printf("\tAverage Time: %lf\n\n", cAverage);
 
     // Time x86_64 Function Call
     printf("x86_64 Dot Product Function:\n");
@@ -117,30 +118,32 @@ int main()
         startTime = clock();
         sdot = dotProduct(n, A, B);
         startTime = clock() - startTime;
-        asmTimesTaken[i] = ((double)startTime) / CLOCKS_PER_SEC;
+        asmTimes[i] = ((double)startTime) / CLOCKS_PER_SEC;
     }
     sdotAsm = sdot;
-    asmAvgTimeTaken = computeAverageTime(asmTimesTaken);
-    printf("\tsdot Float Result: %f\n", sdotAsm);
-    printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotAsm);
-    printf("\tAverage Time: %lf\n\n", asmAvgTimeTaken);
+    asmAverage = computeAverageTime(asmTimes);
+    printf("\tsdot Base10: %f\n", sdotAsm);
+    printf("\tsdot Base16: %x\n", *(unsigned int*)&sdotAsm);
+    printf("\tAverage Time: %lf\n\n", asmAverage);
 
     // Results
     printf("Results:\n");
     printf("\tSimilarity: %.2f %%\n", sdotC * 100 / sdotAsm);
-    if (asmAvgTimeTaken <= 0)
+    if (asmAverage <= 0)
         printf("\tTime Difference: 0 (0 %% faster)\n");
     else {
-        printf("\tTime Difference: %lf ", cAvgTimeTaken - asmAvgTimeTaken);
+        printf("\tTime Difference: %lf ", cAverage - asmAverage);
 
-        if (cAvgTimeTaken > asmAvgTimeTaken)
-            printf("(x86_64 is %.2lf times faster)\n", cAvgTimeTaken / asmAvgTimeTaken);
+        if (cAverage > asmAverage)
+            printf("(x86_64 is faster by %.2lf times)\n", cAverage / asmAverage);
         else
-            printf("(C is %.2lf times faster)\n", asmAvgTimeTaken / cAvgTimeTaken);
+            printf("(C is faster by %.2lf times)\n", asmAverage / cAverage);
     }
 
 
 
+    printf("\n======================================================\n");
+    printf("\n==========Start of Program 2...=======================\n");
     printf("\n======================================================\n");
 
     n = (int)pow(2, 24);
@@ -152,13 +155,13 @@ int main()
         startTime = clock();
         sdot = cDotProduct(n, A, B);
         startTime = clock() - startTime;
-        cTimesTaken[i] = ((double)startTime) / CLOCKS_PER_SEC;
+        cTimes[i] = ((double)startTime) / CLOCKS_PER_SEC;
     }
     sdotC = sdot;
-    cAvgTimeTaken = computeAverageTime(cTimesTaken);
-    printf("\tsdot Float Result: %f\n", sdotC);
-    printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotC);
-    printf("\tAverage Time: %lf\n\n", cAvgTimeTaken);
+    cAverage = computeAverageTime(cTimes);
+    printf("\tsdot Base10: %f\n", sdotC);
+    printf("\tsdot Base16: %x\n", *(unsigned int*)&sdotC);
+    printf("\tAverage Time: %lf\n\n", cAverage);
 
     // Time x86_64 Function Call
     printf("x86_64 Dot Product Function:\n");
@@ -166,26 +169,26 @@ int main()
         startTime = clock();
         sdot = dotProduct(n, A, B);
         startTime = clock() - startTime;
-        asmTimesTaken[i] = ((double)startTime) / CLOCKS_PER_SEC;
+        asmTimes[i] = ((double)startTime) / CLOCKS_PER_SEC;
     }
     sdotAsm = sdot;
-    asmAvgTimeTaken = computeAverageTime(asmTimesTaken);
-    printf("\tsdot Float Result: %f\n", sdotAsm);
-    printf("\tsdot Hex Result: %x\n", *(unsigned int*)&sdotAsm);
-    printf("\tAverage Time: %lf\n\n", asmAvgTimeTaken);
+    asmAverage = computeAverageTime(asmTimes);
+    printf("\tsdot Base10: %f\n", sdotAsm);
+    printf("\tsdot Base16: %x\n", *(unsigned int*)&sdotAsm);
+    printf("\tAverage Time: %lf\n\n", asmAverage);
 
     // Results
     printf("Results:\n");
     printf("\tSimilarity: %.2f %%\n", sdotC * 100 / sdotAsm);
-    if (asmAvgTimeTaken <= 0)
+    if (asmAverage <= 0)
         printf("\tTime Difference: 0 (0 %% faster)\n");
     else {
-        printf("\tTime Difference: %lf ", cAvgTimeTaken - asmAvgTimeTaken);
+        printf("\tTime Difference: %lf ", cAverage - asmAverage);
 
-        if (cAvgTimeTaken > asmAvgTimeTaken)
-            printf("(x86_64 is %.2lf times faster)\n", cAvgTimeTaken / asmAvgTimeTaken);
+        if (cAverage > asmAverage)
+            printf("(x86_64 is faster by %.2lf times)\n", cAverage / asmAverage);
         else
-            printf("(C is %.2lf times faster)\n", asmAvgTimeTaken / cAvgTimeTaken);
+            printf("(C is faster by %.2lf times)\n", asmAverage / cAverage);
     }
 
     // Free Memory Allocation
