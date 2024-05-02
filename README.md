@@ -1,5 +1,5 @@
 # LBYARCH-S12-MP2  
-![image](https://github.com/GenuinoVitto/lbyarch-machine-project-2/assets/78674453/d717aa28-a0da-4690-ab97-0021b949734d)
+![image](https://github.com/GenuinoVitto/lbyarch-machine-project-2/assets/78674453/a7cda0e9-d1cb-4dee-9504-a182f25ac1a8)
 ![Static Badge](https://img.shields.io/badge/x86-64-nasm)
 
 Members: <br />- Cruz, Mia Bernice<br />- Genuino, Jose Mari Victorio
